@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<style>
+body {
+    background-color: #ff66b2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+/* Khung form */
+.container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 420px;
+    text-align: center;
+    border: 6px solid #ff66b2;
+    transform: scale(0.9); /* Giảm kích thước xuống 90% */
+    transform-origin: center; /* Căn chỉnh thu nhỏ từ trung tâm */
+}
+
+/* Tiêu đề */
+h2 {
+    font-weight: bold;
+    color: black;
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+/* Nhóm nhập liệu */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Ô nhập liệu */
+.input-group {
+    display: flex;
+    align-items: center;
+    background: #f8e6eb;
+    border-radius: 30px;
+    padding: 10px 15px;
+    border: 2px solid #ddd;
+}
+
+.input-group span {
+    color: #d63384;
+    font-size: 18px;
+    padding-right: 10px;
+}
+
+.input-group input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    font-size: 16px;
+    padding: 5px;
+}
+
+/* Nút đăng ký */
+button {
+    background-color: #ff66b2;
+    color: white;
+    font-size: 18px;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #ff3385;
+}
+
+/* Chữ bên dưới */
+p {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+p a {
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <h2>ĐĂNG KÝ</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Họ và Tên</label>
+                <div class="input-group">
+                    <span><i class="fas fa-user"></i></span>
+                    <input type="text" placeholder="Nhập họ và tên" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Số điện thoại</label>
+                <div class="input-group">
+                    <span><i class="fas fa-phone"></i></span>
+                    <input type="text" placeholder="Nhập số điện thoại" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <div class="input-group">
+                    <span><i class="fas fa-envelope"></i></span>
+                    <input type="email" placeholder="Nhập email" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Mật khẩu</label>
+                <div class="input-group">
+                    <span><i class="fas fa-lock"></i></span>
+                    <input type="password" placeholder="Nhập mật khẩu" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Xác nhận mật khẩu</label>
+                <div class="input-group">
+                    <span><i class="fas fa-key"></i></span>
+                    <input type="password" placeholder="Xác nhận mật khẩu" required>
+                </div>
+            </div>
+
+            <button type="submit">ĐĂNG KÝ</button>
+        </form>
+        <p>Bạn đã có tài khoản? <a href="{% url 'login' %}">Đăng nhập</a></p>
+        <a href="/" class="back-button">⬅ Quay lại</a>
+    </div>
+</body>
+</html>
