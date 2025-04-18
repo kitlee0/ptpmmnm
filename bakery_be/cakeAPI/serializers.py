@@ -22,3 +22,16 @@ class CakeSerializer(serializers.Serializer):
 class CategorySerializer(serializers.Serializer):
     _id = serializers.CharField(read_only=True)
     name = serializers.CharField(max_length=100)
+class UserSerializer(serializers.Serializer):
+    _id = serializers.CharField(read_only=True)
+    name = serializers.CharField(max_length=255)
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
+    phone = serializers.CharField(max_length=15)
+class PaymentSerializer(serializers.Serializer):
+    _id = serializers.CharField(read_only=True)  # Chuyển ObjectId thành chuỗi
+    order_id = serializers.CharField()
+    amount = serializers.IntegerField()
+    method = serializers.CharField()
+    status = serializers.CharField()
+    created_at = serializers.DateTimeField()
