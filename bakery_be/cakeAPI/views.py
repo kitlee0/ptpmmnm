@@ -44,9 +44,19 @@ class CakeListView(APIView):
             new_cake["category_id"] = str(new_cake["category_id"])
             return Response(CakeSerializer(new_cake).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class CakeDetailView(APIView):
+    """Lấy, cập nhật hoặc xóa một bánh kem."""
+
+    def get(self, request, pk):
+        cake = get_object(db.cakes, pk)
+        if cake:
+            cake["_id"] = str(cake["_id"])
+            cake["category_id"] = str(cake["category_id"])
+            serializer = CakeSerializer(cake)
+            return Response(serializer.data)
+        return Response({"error": "Không tìm thấy bánh kem!"}, status=status.HTTP_404_NOT_FOUND)
 
     def put(self, request, pk):
-        """Cập nhật thông tin bánh kem theo ID."""
         cake = get_object(db.cakes, pk)
         if cake:
             serializer = CakeSerializer(data=request.data)
@@ -63,12 +73,11 @@ class CakeListView(APIView):
                 updated_cake["category_id"] = str(updated_cake["category_id"])
                 return Response(CakeSerializer(updated_cake).data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response({"error": "Không tìm thấy bánh!"}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"error": "Không tìm thấy bánh kem!"}, status=status.HTTP_404_NOT_FOUND)
 
     def delete(self, request, pk):
-        """Xóa bánh kem theo ID."""
         cake = get_object(db.cakes, pk)
         if cake:
             db.cakes.delete_one({"_id": ObjectId(pk)})
-            return Response({"message": "Xóa bánh thành công."}, status=status.HTTP_204_NO_CONTENT)
-        return Response({"error": "Không tìm thấy bánh!"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"message": "Xóa bánh kem thành công."}, status=status.HTTP_204_NO_CONTENT)
+        return Response({"error": "Không tìm thấy bánh kem!"}, status=status.HTTP_404_NOT_FOUND)
