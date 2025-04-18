@@ -9,6 +9,9 @@ from bson import ObjectId
 client = MongoClient('mongodb://localhost:27017/')  # Lấy MONGO_URI từ settings.py
 db = client.QuanLyWebBanBanh  # Tên database
 
+def home(request):
+    return render(request, 'cake/home.html')
+
 # --- Helper Function ---
 def get_object(collection, pk):
     """Lấy một document theo _id."""
