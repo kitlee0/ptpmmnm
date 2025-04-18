@@ -1,7 +1,9 @@
 from django.urls import path
-from .views import CakeListView, CakeDetailView  # Import view
+from .views import CakeListView, CakeDetailView,CategoryListView, CategoryDetailView # Import view
 
 urlpatterns = [
     path('cakes/', CakeListView.as_view(), name='cake-list'),
-    path('cakes/<str:pk>/', CakeDetailView.as_view()) # GET, PUT, DELETE
+    path('cakes/<str:pk>/', CakeDetailView.as_view(), name='cake-detail'), # GET, PUT, DELETE
+    path('categories/', CategoryListView.as_view(), name='category-list'),
+    path('categories/<str:pk>/', CategoryDetailView.as_view(), name='category-detail'),
 ]
