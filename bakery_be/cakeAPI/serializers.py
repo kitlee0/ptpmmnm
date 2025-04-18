@@ -29,9 +29,22 @@ class UserSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
     phone = serializers.CharField(max_length=15)
 class PaymentSerializer(serializers.Serializer):
-    _id = serializers.CharField(read_only=True)  # Chuyển ObjectId thành chuỗi
+    _id = serializers.CharField(read_only=True)
     order_id = serializers.CharField()
     amount = serializers.IntegerField()
     method = serializers.CharField()
     status = serializers.CharField()
     created_at = serializers.DateTimeField()
+class OrderItemSerializer(serializers.Serializer):
+    cake_id = serializers.CharField()
+    name = serializers.CharField()
+    quantity = serializers.IntegerField()
+    price = serializers.IntegerField()
+class OrderSerializer(serializers.Serializer):
+    id = serializers.CharField(source='_id', read_only=True)
+    user_id = serializers.CharField()
+    total_price = serializers.IntegerField()
+    status = serializers.CharField()
+    created_at = serializers.DateTimeField()
+    items = OrderItemSerializer(many=True)
+

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import CakeSerializer, CategorySerializer, PaymentSerializer, UserSerializer
+from .serializers import CakeSerializer, CategorySerializer, OrderSerializer, PaymentSerializer, UserSerializer
 from pymongo import MongoClient
 from bson import ObjectId
 
@@ -264,3 +264,68 @@ class PaymentDetailView(APIView):
             db.payments.delete_one({"_id": ObjectId(pk)})
             return Response({"message": "Xóa thanh toán thành công."}, status=status.HTTP_204_NO_CONTENT)
         return Response({"error": "Không tìm thấy thanh toán!"}, status=status.HTTP_404_NOT_FOUND)
+class OrderListView(APIView):
+    def get(self, request):
+        """Lấy danh sách tất cả đơn hàng."""
+        orders = list(db.orders.find())
+        for order in orders:
+            order["_id"] = str(order["_id"])
+            order["user_id"] = str(order["user_id"])
+            for item in order["items"]:
+                item["cake_id"] = str(item["cake_id"])
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        """Tạo một đơn hàng mới."""
+        serializer = OrderSerializer(data=request.data)
+        if serializer.is_valid():
+            new_order = serializer.validated_data
+            new_order["user_id"] = ObjectId(new_order["user_id"])
+            for item in new_order["items"]:
+                item["cake_id"] = ObjectId(item["cake_id"])
+            result = db.orders.insert_one(new_order)
+            new_order["_id"] = str(result.inserted_id)
+            new_order["user_id"] = str(new_order["user_id"])
+            for item in new_order["items"]:
+                item["cake_id"] = str(item["cake_id"])
+            return Response(OrderSerializer(new_order).data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class OrderDetailView(APIView):
+    """Lấy, cập nhật hoặc xóa một đơn hàng."""
+
+    def get(self, request, pk):
+        order = db.orders.find_one({"_id": ObjectId(pk)})
+        if order:
+            order["_id"] = str(order["_id"])
+            order["user_id"] = str(order["user_id"])
+            for item in order["items"]:
+                item["cake_id"] = str(item["cake_id"])
+            serializer = OrderSerializer(order)
+            return Response(serializer.data)
+        return Response({"error": "Không tìm thấy đơn hàng!"}, status=status.HTTP_404_NOT_FOUND)
+
+    def put(self, request, pk):
+        order = db.orders.find_one({"_id": ObjectId(pk)})
+        if order:
+            serializer = OrderSerializer(data=request.data)
+            if serializer.is_valid():
+                updated_order = serializer.validated_data
+                updated_order["user_id"] = ObjectId(updated_order["user_id"])
+                for item in updated_order["items"]:
+                    item["cake_id"] = ObjectId(item["cake_id"])
+                db.orders.update_one({"_id": ObjectId(pk)}, {"$set": updated_order})
+                updated_order["_id"] = pk
+                updated_order["user_id"] = str(updated_order["user_id"])
+                for item in updated_order["items"]:
+                    item["cake_id"] = str(item["cake_id"])
+                return Response(OrderSerializer(updated_order).data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error": "Không tìm thấy đơn hàng!"}, status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, pk):
+        order = db.orders.find_one({"_id": ObjectId(pk)})
+        if order:
+            db.orders.delete_one({"_id": ObjectId(pk)})
+            return Response({"message": "Xóa đơn hàng thành công."}, status=status.HTTP_204_NO_CONTENT)
+        return Response({"error": "Không tìm thấy đơn hàng!"}, status=status.HTTP_404_NOT_FOUND)
