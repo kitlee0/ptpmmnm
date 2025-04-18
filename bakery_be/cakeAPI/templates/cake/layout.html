@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bakery Shop{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg" style="background-color: #ff6699;">
+        <div class="container">
+            <a class="navbar-brand text-white" href="/">Bakery Shop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <!-- Thanh tìm kiếm căn giữa -->
+            <div class="search-container">
+                <form action="/search" method="get" class="d-flex">
+                    <input type="text" placeholder="Tìm kiếm bánh..." name="q">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+    
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link text-white" href="#">Trang chủ</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link text-white" >Sản phẩm <i class="bi bi-chevron-down"></i></a>
+                        <div class="dropdown-content">
+                        <a href="#">Bánh sinh nhật</a>
+                        <a href="#">Bánh cưới</a>
+                        <a href="#">Bánh theo mùa</a>
+                        <a href="#">Bánh thiết kế</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#">Giỏ hàng</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'login' %}">Đăng nhập</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{% url 'register' %}">Đăng ký</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    
+
+    <!-- Nội dung chính -->
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+    </div>
+    {% include 'partials/footer.html' %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

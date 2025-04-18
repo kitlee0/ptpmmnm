@@ -1,0 +1,48 @@
+{% extends 'cakeshop/layout.html' %}
+{% load static %}
+
+{% block title %}Trang Chủ - Bakery Shop{% endblock %}
+
+{% block content %}
+
+<section class="banner position-relative">
+    <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="1"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static 'images/banhkem1.jpg' %}" class="d-block w-100" alt="Bánh kem 1">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'images/image.png' %}" class="d-block w-100" alt="Bánh kem 2">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+    
+    <!-- Overlay text -->
+    <div class="banner-overlay">
+        <h1 class="display-4 fw-bold">BAKERY CAKE</h1>
+        <p class="lead">Chào mừng tới trang web</p>
+        <a href="/api/" class="btn btn-light btn-lg">ĐẶT BÁNH NGAY</a>
+    </div>
+</section>
+
+<br>
+
+<!-- Danh sách bánh -->
+{#  <div class="container">  #}
+    {#  <h1 class="text-center my-4">Danh sách bánh</h1>
+    {% include 'cakeshop/cake_list.html' %}
+</div>  #}
+
+<br>
+
+{% endblock %}
