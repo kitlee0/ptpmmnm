@@ -29,3 +29,5 @@ def register(request):
         form = UserRegistrationForm()
     
     return render(request, 'cake/register.html', {'form': form})
+def cake_list_page(request):
+    return render(request, 'cake/cake_list.html')

@@ -1,0 +1,41 @@
+{% extends 'cake/layout.html' %}
+
+{% block title %}Danh sách Bánh Kem{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Danh sách bánh kem</h2>
+<div id="cake-container" class="row g-4">
+    <!-- Dữ liệu bánh kem sẽ được render ở đây bằng JavaScript -->
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch('http://localhost:8000/api/cakes/')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('cake-container');
+                data.forEach(cake => {
+                    const col = document.createElement('div');
+                    col.className = 'col-md-4';
+
+                    const card = `
+                        <div class="card h-100 shadow-sm">
+                            <img src="${cake.image}" class="card-img-top" alt="${cake.name}" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">${cake.name}</h5>
+                                <p class="card-text">${cake.description || 'Không có mô tả'}</p>
+                                <p class="card-text"><strong>${cake.price.toLocaleString()} VND</strong></p>
+                            </div>
+                        </div>
+                    `;
+                    col.innerHTML = card;
+                    container.appendChild(col);
+                });
+            })
+            .catch(error => {
+                console.error('Lỗi khi gọi API:', error);
+                document.getElementById('cake-container').innerHTML = `<p class="text-danger">Không thể tải dữ liệu bánh kem.</p>`;
+            });
+    });
+</script>
+{% endblock %}
