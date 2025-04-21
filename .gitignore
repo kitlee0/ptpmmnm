@@ -1,0 +1,25 @@
+# Bỏ các file tạm và môi trường
+*.pyc
+__pycache__/
+*.log
+*.sqlite3
+*.db
+*.env
+.env/
+
+# Bỏ thư viện môi trường ảo
+venv/
+env/
+.banhkem/
+.banhkem/
+
+# Bỏ IDE config
+.vscode/
+.idea/
+
+# Bỏ static/media được sinh ra
+static/
+media/
+
+# Django migrations (tùy chọn)
+**/migrations/
