@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cakeFE',
     'rest_framework',
-    'corsheaders',  # Add this line
-    
+    'corsheaders',
+    'ADMIN',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +59,7 @@ ROOT_URLCONF = 'bakery_fe.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'cakeFE' / 'templates'],
+        'DIRS': [BASE_DIR / 'cakeFE', BASE_DIR / 'ADMIN' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

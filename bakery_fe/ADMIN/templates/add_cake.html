@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Bánh Kem</title>
+</head>
+<body>
+    <h1>Thêm Bánh Kem Mới</h1>
+    <form method="POST">
+        {% csrf_token %}
+        
+        <label for="name">Tên Bánh Kem:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="description">Mô Tả:</label>
+        <textarea id="description" name="description" required></textarea><br>
+
+        <label for="price">Giá:</label>
+        <input type="number" id="price" name="price" required><br>
+
+        <label for="image">Ảnh (URL):</label>
+        <input type="text" id="image" name="image"><br>
+
+        <label for="category_id">Danh Mục:</label>
+        <input type="text" id="category_id" name="category_id"><br>
+
+        <button type="submit">Thêm Bánh Kem</button>
+    </form>
+</body>
+</html>

@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import include, path
 from .views import CakeListView, CakeDetailView,CategoryListView, CategoryDetailView, OrderDetailView, OrderListView, PaymentDetailView, PaymentListView, UserDetailView, UserListView, home # Import view
 
 urlpatterns = [

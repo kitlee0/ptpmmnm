@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách Bánh Kem</title>
+</head>
+<body>
+    <h1>Admin - Danh sách Bánh Kem</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Tên</th>
+                <th>Mô tả</th>
+                <th>Giá</th>
+                <th>Ảnh</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cake in cakes %}
+    <tr>
+        <td>{{ cake.name }}</td>
+        <td>{{ cake.description }}</td>
+        <td>{{ cake.price }}</td>
+        <td><img src="{{ cake.image }}" alt="{{ cake.name }}" width="100"></td>
+        <td>
+            <a href="{% url 'admin_edit_cake' '(cake.id)' %}">Edit</a> <!-- Đảm bảo cake._id là đúng -->
+            <a href="{% url 'admin_delete_cake' '(cake.id)' %}">Delete</a>
+        </td>
+    </tr>
+{% empty %}
+    <tr><td colspan="5">Không có bánh kem nào</td></tr>
+{% endfor %}
+
+        </tbody>
+    </table>
+
+    <script>
+        function deleteCake(cake_id) {
+            if (confirm("Bạn có chắc muốn xóa bánh kem này?")) {
+                fetch(`http://localhost:8000/api/cakes/${cake_id}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then(response => {
+                    if (response.status === 204) {
+                        alert("Xóa bánh kem thành công.");
+                        location.reload();  // Tải lại trang để cập nhật danh sách
+                    } else {
+                        alert("Có lỗi xảy ra khi xóa bánh kem.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Có lỗi xảy ra khi xóa bánh kem.');
+                });
+            }
+        }
+    </script>
+</body>
+</html>
